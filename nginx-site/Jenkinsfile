@@ -37,5 +37,17 @@ pipeline {
                 }
             }
         }
+
+        stage('Restart NGINX Container') {
+            steps {
+                script {
+                    sh '''
+                        docker stop nginx || true
+                        docker rm nginx || true
+                        docker run -d --name nginx -p 80:80 saranshdocker12/nginx-static:latest
+                    '''
+                }
+            }
+        }
     }
 }
